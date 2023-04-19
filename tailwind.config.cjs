@@ -50,8 +50,13 @@ let newcolors = {
         100: "#242525", //card bg
         200: "#404243", //card onselec border
     },
-
     mongoshade: "#2a343b",
+    air: {
+        pink: "#FF385C",
+        black: '#222222',
+        muted: "#717171",
+        white: "#FFFFFF"
+    }
 };
 let mycolors = { ...colors, ...newcolors };
 module.exports = {
@@ -64,11 +69,17 @@ module.exports = {
         themes: [
             {
                 mytheme: {
-                    neutral: "#242525",
-                    "base-100": "#282a2a",
-                    "base-200": "#3C474A",
-                    "base-300": "#273137",
+                    primary: "#000000",
+                    secondary: "#000000",
+                    accent: "#37cdbe",
+                    neutral: "#3d4451",
+                    "base-100": "#ffffff",
                 },
+                extends: {
+                    boxShadow: {
+                        "3xl": '0 1px 0 rgba(0, 0, 0, 0.08);',
+                    }
+                }
             },
         ],
     },
