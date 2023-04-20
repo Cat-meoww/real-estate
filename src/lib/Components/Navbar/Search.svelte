@@ -4,12 +4,14 @@
 
 <div
 	class="
+  border
+  border-solid
   border-air-grey-1
   w-full
   md:w-auto
   py-2
   rounded-full 
-  hover:shadow-lg shadow-search
+   shadow-search hover:shadow-search-hover
   transition
   cursor-pointer
   flex-initial

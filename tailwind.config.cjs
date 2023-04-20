@@ -85,7 +85,8 @@ module.exports = {
 		colors: mycolors,
         extend: {
             boxShadow: {
-              'search': '0px 1px 2px rgba(0, 0, 0, 0.08), 0px 4px 12px rgba(0, 0, 0, 0.05)',
+              'search': '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
+			  'search-hover':"0 2px 4px rgba(0,0,0,0.18)"
             }
           }
 	}
