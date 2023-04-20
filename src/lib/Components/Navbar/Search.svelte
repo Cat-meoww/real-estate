@@ -10,23 +10,18 @@
   w-full
   md:w-auto
   py-2
-  rounded-full 
+  rounded-full
    shadow-search hover:shadow-search-hover
   transition
   cursor-pointer
-  flex-initial
-"
+  flex-initial"
 >
-	<div
-		class="flex flex-row items-center justify-between
-  "
-	>
+	<div class="flex flex-row items-center justify-between">
 		<div
 			class="
       text-sm
       font-semibold
-      px-6
-    "
+      px-6"
 		>
 			Any Where
 		</div>
@@ -42,7 +37,7 @@
       text-center
     "
 		>
-    Any Week
+			Any Week
 		</div>
 		<div
 			class="
