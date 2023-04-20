@@ -57,8 +57,7 @@ let newcolors = {
 		muted: '#717171',
 		white: '#FFFFFF',
 		grey:{
-			1:"##DDDDDD"
-
+			1:"#DDDDDD"
 		}
 	}
 };

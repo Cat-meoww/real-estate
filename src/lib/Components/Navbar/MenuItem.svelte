@@ -3,13 +3,7 @@
 </script>
 
 <div
-	class="
-        px-4
-        py-3
-        hover:bg-neutral-100
-        transition
-        font-semibold
-      "
+	class="px-4 py-3 hover:bg-neutral-100 transition font-semibold whitespace-nowrap overflow-hidden"
 >
 	{label}
 </div>
