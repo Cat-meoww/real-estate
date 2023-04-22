@@ -1,15 +1,18 @@
 <script>
+	import { IsLoggedIn } from '$Components/stores.js';
 	import Hamburger from '../Icons/Hamburger.svelte';
 	import UserIcon from '../Icons/UserIcon.svelte';
 	import MenuItem from './MenuItem.svelte';
 
 	let menuState = false;
-	let Logged = false;
+	$: Logged = $IsLoggedIn;
 </script>
 
 <div class="relative flex-[1_0_auto] md:flex-[1_0_140px]">
 	<div class="flex flex-row justify-end items-center gap-3">
-		<div class=" hidden md:block whitespace-nowrap overflow-hidden text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer">
+		<div
+			class=" hidden md:block whitespace-nowrap overflow-hidden text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
+		>
 			Airbnb your home
 		</div>
 		<button
@@ -23,7 +26,9 @@
 		</button>
 	</div>
 	{#if menuState}
-		<div class=" absolute rounded-xl shadow-search hover:shadow-search-hover w-[40vw] md:w-3/4 lg:w-2/4 mt-3 bg-white overflow-hidden right-0 top-12 text-sm">
+		<div
+			class=" absolute rounded-xl shadow-search hover:shadow-search-hover w-[40vw] md:w-3/4 lg:w-2/4 mt-3 bg-white overflow-hidden right-0 top-12 text-sm"
+		>
 			<div class="flex flex-col cursor-pointer">
 				{#if Logged}
 					<MenuItem label="My trips" />

@@ -17,7 +17,10 @@ let newcolors = {
 		tabs: {
 			texthover: '#cac3b8',
 			border: '#3f4242',
-			selected: { text: '#9be2c6', tile: '#24854a' },
+			selected: {
+				text: '#9be2c6',
+				tile: '#24854a'
+			},
 			filter: {
 				border: '#4b4f4f',
 				badge: '#464949'
@@ -34,7 +37,10 @@ let newcolors = {
 				hover: {
 					bg: '#242525',
 					border: '#575b5c',
-					box: { b: '#0d0d0d4d', c: '#2b3531' }
+					box: {
+						b: '#0d0d0d4d',
+						c: '#2b3531'
+					}
 				},
 				border: '#575b5c',
 				color: '#b9b1a6',
@@ -56,37 +62,41 @@ let newcolors = {
 		black: '#222222',
 		muted: '#717171',
 		white: '#FFFFFF',
-		grey:{
-			1:"#DDDDDD"
+		hover: {
+			bg: "#f7f7f7"
+		},
+		grey: {
+			1: "#DDDDDD"
 		}
 	}
 };
-let mycolors = { ...colors, ...newcolors };
+let mycolors = {
+	...colors,
+	...newcolors
+};
 module.exports = {
 	content: ['./src/routes/**/*.{svelte,js,ts}', './src/lib/Components/**/*.{svelte,js,ts}'],
 	plugins: [require('@tailwindcss/typography'), require('daisyui')],
 	daisyui: {
-		themes: [
-			{
-				mytheme: {
-					primary: '#000000',
-					secondary: '#000000',
-					accent: '#37cdbe',
-					neutral: '#3d4451',
-					'base-100': '#ffffff',
-					
-				},
-               
-			}
-		]
+		themes: [{
+			mytheme: {
+				primary: '#000000',
+				secondary: '#000000',
+				accent: '#37cdbe',
+				neutral: '#3d4451',
+				'base-100': '#ffffff',
+
+			},
+
+		}]
 	},
 	theme: {
 		colors: mycolors,
-        extend: {
-            boxShadow: {
-              'search': '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
-			  'search-hover':"0 2px 4px rgba(0,0,0,0.18)"
-            }
-          }
+		extend: {
+			boxShadow: {
+				'search': '0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05)',
+				'search-hover': "0 2px 4px rgba(0,0,0,0.18)"
+			}
+		}
 	}
 };
