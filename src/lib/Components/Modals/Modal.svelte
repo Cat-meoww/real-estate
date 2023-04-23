@@ -1,10 +1,12 @@
 <script>
+	import { fly } from 'svelte/transition';
 	import Close from '../Icons/Close.svelte';
-	import Button from '../Button.svelte';
 	export let showModal = true;
 	export let isOpen = false;
-	export let actionLabel;
-	export let disabled;
+
+	export function close() {
+		isOpen = false;
+	}
 </script>
 
 {#if isOpen}
@@ -18,6 +20,7 @@
 		>
 			<!-- content -->
 			<div
+				transition:fly={{ y: 500, duration: 400 }}
 				class={`
 				pt-3 md:pt-0
             translate
@@ -35,7 +38,7 @@
 					<div
 						class=" flex leading-5 items-center px-6 py-3 md:py-0 min-h-12 md:min-h-[64px] rounded-t justify-center relative border-b-[1px]"
 					>
-						<button
+						<button on:click={close}
 							class="p-2.5 border-0 rounded-full hover:text-black hover:bg-air-hover-bg transition absolute left-3
                   "
 						>
@@ -57,24 +60,15 @@
 							<span class="missing">Body</span>
 						</slot>
 					</div>
-					<!-- {/*footer*/} -->
-					<div class="flex flex-col gap-2 p-6">
-						<div
-							class="flex flex-row items-center gap-4 w-full
-                  "
-						>
-							<!-- {secondaryAction && secondaryActionLabel && (
-                    <Button 
-                      disabled={disabled} 
-                      label={secondaryActionLabel} 
-                      onClick={handleSecondaryAction}
-                      outline
-                    />  
-                  )} -->
-							<Button {disabled} label={actionLabel} on:click />
+
+					{#if $$slots.footer}
+						<!-- {/*footer*/} -->
+						<div class="flex flex-col gap-2 p-6">
+							<div class="flex flex-row items-center gap-4 w-full">
+								<slot name="footer" />
+							</div>
 						</div>
-						<!-- {footer} -->
-					</div>
+					{/if}
 				</div>
 			</div>
 		</div>

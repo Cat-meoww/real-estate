@@ -1,8 +1,8 @@
 <script>
-	export let disabled;
+	export let disabled = false;
 	export let label;
-	export let outline;
-	export let small;
+	export let outline = false;
+	export let small = false;
 </script>
 
 <button

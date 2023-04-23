@@ -1,6 +1,7 @@
 <script>
-	import { IsLoggedIn } from '$Components/stores.js';
+	import { IsLoggedIn, testmodal } from '$Components/stores.js';
 	import Hamburger from '../Icons/Hamburger.svelte';
+
 	import UserIcon from '../Icons/UserIcon.svelte';
 	import MenuItem from './MenuItem.svelte';
 
@@ -39,7 +40,13 @@
 					<hr />
 					<MenuItem label="Logout" />
 				{:else}
-					<MenuItem label="Login" />
+					<MenuItem
+						label="Log in"
+						on:click={() => {
+							menuState = false;
+							$testmodal = true;
+						}}
+					/>
 					<MenuItem label="Sign up" />
 				{/if}
 			</div>
