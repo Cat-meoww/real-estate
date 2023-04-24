@@ -57,7 +57,7 @@
 					<div class="relative p-6 flex-auto">
 						<!-- {body} -->
 						<slot name="body">
-							<span class="missing">Body</span>
+							<span class="missing">missing Body</span>
 						</slot>
 					</div>
 

@@ -1,5 +1,5 @@
 <script>
-	import { IsLoggedIn, testmodal } from '$Components/stores.js';
+	import { IsLoggedIn, testmodal,registermodal } from '$Components/stores.js';
 	import Hamburger from '../Icons/Hamburger.svelte';
 
 	import UserIcon from '../Icons/UserIcon.svelte';
@@ -47,7 +47,13 @@
 							$testmodal = true;
 						}}
 					/>
-					<MenuItem label="Sign up" />
+					<MenuItem
+						label="Sign up"
+						on:click={() => {
+							menuState = false;
+							$registermodal = true;
+						}}
+					/>
 				{/if}
 			</div>
 		</div>
