@@ -5,6 +5,7 @@ import {
 export function POST({
     url,
 }) {
+    console.log("post req");
     const min = Number(url.searchParams.get('min') ?? '0');
     const max = Number(url.searchParams.get('max') ?? '1');
 
