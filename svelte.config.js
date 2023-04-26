@@ -11,7 +11,11 @@ const config = {
 		alias: {
 			$Components: "./src/lib/Components",
 		},
-	}
+
+	},
+	csrf: {
+		checkOrigin: true,
+	},
 };
 
 
