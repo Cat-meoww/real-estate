@@ -11,7 +11,7 @@
 	let form = null;
 	let isLoading = false;
 
-	function handleAgentRegister(req) {
+	function handleAgentRegister(handler) {
 		// `form` is the `<form>` element
 		// `data` is its `FormData` object
 		// `action` is the URL to which the form is posted
@@ -28,6 +28,7 @@
 				// re-run all `load` functions, following the successful update
 				//await invalidateAll();
 				console.log('success');
+				handler.form.reset();
 			}
 			//applyAction(result);
 		};
@@ -56,13 +57,12 @@
 	// }
 </script>
 
-
 <Modal bind:isOpen={$registermodal}>
 	<svelte:fragment slot="title">Register</svelte:fragment>
 	<svelte:fragment slot="body">
 		<form action="?/RegisterAgent" method="POST" use:enhance={handleAgentRegister}>
 			<div class="flex flex-col gap-4">
-				<Heading title="Welcome to {PUBLIC_APPNAME}" subtitle="Create an account" />
+				<Heading title="Welcome to {PUBLIC_APPNAME}" subtitle="Create an agent account" />
 				<Input id="email" label="Email" disabled={isLoading} value={form?.email ?? ''} required />
 				<Input id="name" label="Name" disabled={isLoading} value={form?.name ?? ''} required />
 				<Input
@@ -77,7 +77,7 @@
 				{#if form?.success}
 					<p>Successfully logged in! Welcome back {form?.success}</p>
 				{:else}
-					<p>Successfully gghgfhg ghhghg {form?.success}</p>
+					<p>error {form?.success}</p>
 				{/if}
 			</div>
 		</form>
