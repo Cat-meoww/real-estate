@@ -1,7 +1,10 @@
 <script>
 	import Navbar from '$Components/Navbar/Navbar.svelte';
-	let username = 'Hello daisyUI';
-	let pwd = '';
+
+	// export let data;
+	// export let form;
 </script>
 
-<Navbar />
+<Navbar  />
+
+<!-- {@debug form} -->

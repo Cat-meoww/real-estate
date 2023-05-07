@@ -64,9 +64,7 @@
 					{#if $$slots.footer}
 						<!-- {/*footer*/} -->
 						<div class="flex flex-col gap-2 p-6">
-							<div class="flex flex-row items-center gap-4 w-full">
-								<slot name="footer" />
-							</div>
+							<slot name="footer" />
 						</div>
 					{/if}
 				</div>

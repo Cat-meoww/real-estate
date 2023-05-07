@@ -12,7 +12,7 @@ const config = {
 			$Components: "./src/lib/Components",
 		},
 		csrf: {
-			checkOrigin: true,
+			checkOrigin: false,
 		},
 
 	},

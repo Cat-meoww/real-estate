@@ -66,7 +66,8 @@ let newcolors = {
 			bg: "#f7f7f7"
 		},
 		grey: {
-			1: "#DDDDDD"
+			1: "#DDDDDD",
+			border:"#b0b0b0"
 		}
 	}
 };
