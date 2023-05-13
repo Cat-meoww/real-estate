@@ -1,5 +1,7 @@
 <script>
 	import '../../app.css';
+	import { onMount } from 'svelte';
+	import { Toaster } from 'svelte-french-toast';
 </script>
 
 <svelte:head>
@@ -7,3 +9,4 @@
 </svelte:head>
 
 <slot />
+<Toaster />

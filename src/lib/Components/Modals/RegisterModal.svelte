@@ -2,6 +2,7 @@
 	import { PUBLIC_APPNAME } from '$env/static/public';
 	import { registermodal } from '$Components/stores.js';
 	import { applyAction, deserialize, enhance } from '$app/forms';
+	import toast from 'svelte-french-toast';
 	// import { page } from '$app/stores';
 	import Modal from './Modal.svelte';
 	import Button from '../Button.svelte';
@@ -12,49 +13,34 @@
 	let isLoading = false;
 
 	function handleAgentRegister(handler) {
+		isLoading = true;
 		// `form` is the `<form>` element
 		// `data` is its `FormData` object
 		// `action` is the URL to which the form is posted
 		// `cancel()` will prevent the submission
 		//cancel();
-
-		//console.log({ form, data, action, cancel });
 		return async ({ result }) => {
+			isLoading = false;
 			form = result?.data ?? result;
 			// `result` is an `ActionResult` object
-			console.log({ form });
+			//console.log({ form });
 			// console.log(response.result.type);
 			if (result.type === 'success') {
 				// re-run all `load` functions, following the successful update
 				//await invalidateAll();
 				console.log('success');
+				toast.success('Registation Success', { duration: 1500 });
 				handler.form.reset();
+			}
+			if (result.type === 'failure') {
+				toast.error('Something went wrong', {
+					duration: 1500
+				});
 			}
 			//applyAction(result);
 		};
 	}
 	$: console.log(form);
-
-	// async function handleSubmit(event) {
-	// 	const data = new FormData(this);
-
-	// 	const response = await fetch(this.action, {
-	// 		method: 'POST',
-	// 		body: data,
-	// 		headers: {
-	// 			'x-sveltekit-action': 'true'
-	// 		}
-	// 	});
-	// 	/** @type {import('@sveltejs/kit').ActionResult} */
-	// 	const result = deserialize(await response.text());
-
-	// 	if (result.type === 'success') {
-	// 		// re-run all `load` functions, following the successful update
-	// 		await invalidateAll();
-	// 	}
-
-	// 	applyAction(result);
-	// }
 </script>
 
 <Modal bind:isOpen={$registermodal}>
@@ -63,27 +49,53 @@
 		<form action="?/RegisterAgent" method="POST" use:enhance={handleAgentRegister}>
 			<div class="flex flex-col gap-4">
 				<Heading title="Welcome to {PUBLIC_APPNAME}" subtitle="Create an agent account" />
-				<Input id="email" label="Email" disabled={isLoading} value={form?.email ?? ''} required />
-				<Input id="name" label="Name" disabled={isLoading} value={form?.name ?? ''} required />
+				<Input
+					id="email"
+					label="Email"
+					disabled={isLoading}
+					value={form?.data?.email ?? ''}
+					required
+					type="email"
+					errors={form?.errors ?? []}
+				/>
+				<Input
+					id="name"
+					label="Name"
+					disabled={isLoading}
+					value={form?.data?.name ?? ''}
+					required
+					errors={form?.errors ?? []}
+				/>
 				<Input
 					id="password"
 					label="Password"
 					type="password"
-					value={form?.password ?? ''}
+					value={form?.data?.password ?? ''}
 					disabled={isLoading}
 					required
+					errors={form?.errors ?? []}
 				/>
-				<Button label="Continue" />
-				{#if form?.success}
-					<p>Successfully logged in! Welcome back {form?.success}</p>
-				{:else}
-					<p>error {form?.success}</p>
-				{/if}
+				<Input
+					id="passwordConfirm"
+					label="Confirm Password"
+					type="password"
+					value={form?.passwordConfirm ?? ''}
+					disabled={isLoading}
+					required
+					errors={form?.errors ?? []}
+				/>
+				<Button label="Continue" disabled={isLoading} />
 			</div>
 		</form>
 	</svelte:fragment>
 	<svelte:fragment slot="footer">
 		<div class="flex flex-col gap-4">
+			{#if form?.success}
+				<p>Successfully logged in! Welcome back {form.success}</p>
+			{/if}
+			{#if form?.errmsg}
+				<p class="text-air-pink text-center">{form.errmsg}</p>
+			{/if}
 			<div class="text-neutral-500 text-center font-light">
 				<p class="text-center">
 					Already have an account?

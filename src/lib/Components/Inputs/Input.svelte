@@ -3,17 +3,18 @@
 	export let label;
 	export let disabled = false;
 	export let value = '';
-	export let type;
+	export let type="text";
 	export let formatPrice;
 	export let errors = [];
+	export let required = false;
 
 	const name = id;
 
-	const handleInput = (e) => {
-		// in here, you can switch on type and implement
-		// whatever behaviour you need
-		value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
-	};
+	// const handleInput = (e) => {
+	// 	// in here, you can switch on type and implement
+	// 	// whatever behaviour you need
+	// 	value = type.match(/^(number|range)$/) ? +e.target.value : e.target.value;
+	// };
 </script>
 
 <div class="w-full relative">
@@ -34,7 +35,8 @@
 		placeholder=" "
 		{type}
 		{value}
-    {name}
+		{name}
+		{required}
 		class={`
         peer
         w-full
@@ -55,7 +57,6 @@
         ${errors[id] ? 'border-rose-500' : 'border-air-grey-border'}
         ${errors[id] ? 'focus:border-rose-500' : 'focus:border-black'}
       `}
-		
 	/>
 	<label
 		for={id}
