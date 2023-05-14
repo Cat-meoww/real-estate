@@ -2,6 +2,7 @@
 	import { PUBLIC_APPNAME } from '$env/static/public';
 	import { registermodal } from '$Components/stores.js';
 	import { applyAction, deserialize, enhance } from '$app/forms';
+
 	import toast from 'svelte-french-toast';
 	// import { page } from '$app/stores';
 	import Modal from './Modal.svelte';
