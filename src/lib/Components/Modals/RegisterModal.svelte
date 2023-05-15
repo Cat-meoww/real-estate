@@ -41,7 +41,7 @@
 			//applyAction(result);
 		};
 	}
-	$: console.log(form);
+	//$: console.log(form);
 </script>
 
 <Modal bind:isOpen={$registermodal}>

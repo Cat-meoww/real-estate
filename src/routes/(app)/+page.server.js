@@ -1,9 +1,17 @@
+import crypto from 'crypto';
 import { fail } from '@sveltejs/kit';
-import { z } from 'zod';
-
+import { promise, z } from 'zod';
+import db from '$db/mongo.js';
 export async function load() {
-	const user = { name: 'naveen' };
-	return { user };
+	try {
+		const agent_data = await db.collection('agents').find({}).toArray();
+		console.log(agent_data);
+		const user = { name: 'naveen' };
+		return { user };
+	} catch (error) {
+		console.log('error loading +page data');
+		return { error: true };
+	}
 }
 
 const RegisterAgentSchema = z
@@ -19,6 +27,10 @@ const RegisterAgentSchema = z
 			.min(1, { message: 'Email is required' })
 			.max(64, { message: 'Email must be less than 64 characters' })
 			.email({ message: 'Email must be a valid email address' }),
+		phone: z
+			.number({ required_error: 'Phone is required' })
+			.gt(999999999, { message: 'Phone must be a valid number' })
+			.lt(9999999999, { message: 'Phone must be a valid number' }),
 		password: z
 			.string({ required_error: 'Password is required' })
 			.min(6, { message: 'Password must be at least 6 characters' })
@@ -47,17 +59,16 @@ const RegisterAgentSchema = z
 /** @type {import('./$types').Actions} */
 export const actions = {
 	RegisterAgent: async ({ request }) => {
-		// TODO register the user
-		const formData = Object.fromEntries(await request.formData());
-
 		try {
+			const formData = Object.fromEntries(await request.formData());
 			const result = RegisterAgentSchema.parse(formData);
-			console.log('SUCCESS');
+
 			console.log(result);
-			return fail(400, {
-				data: formData,
-				errmsg:"User already exist",
-			});
+			return await createAgent(formData);
+			// return fail(400, {
+			// 	data: formData,
+			// 	errmsg: 'User already exist'
+			// });
 			//return { success: true };
 		} catch (err) {
 			console.log(err);
@@ -87,3 +98,21 @@ export const actions = {
 		return fail(400, { email, missing: true });
 	}
 };
+
+async function createAgent({ name, email, password, phone }) {
+	const document = {
+		name,
+		email,
+		phone,
+		isVerified: { email: false, phone: false }
+	};
+	const pass = await hash_password(password);
+
+	const doc = { ...document, password: pass };
+	return Promise.resolve({ success: true });
+}
+
+async function hash_password(password) {
+	const hash = crypto.createHash('sha256').update(password).digest('hex');
+	return { hash };
+}
