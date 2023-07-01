@@ -1,0 +1,6 @@
+# Private
+MONGODB_URI="mongodb+srv://"
+DATABASE_NAME="air"
+
+# Public
+PUBLIC_APPNAME="Air"

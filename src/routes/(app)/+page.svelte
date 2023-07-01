@@ -7,6 +7,5 @@
 	// export let form;
 </script>
 
-<Navbar />
-
-<!-- {@debug form} -->
+<Navbar data />
+<!-- {@debug data} -->

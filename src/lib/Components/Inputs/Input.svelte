@@ -7,6 +7,7 @@
 	export let formatPrice;
 	export let errors = [];
 	export let required = false;
+	export let autocomplete = "off";
 
 	const name = id;
 
@@ -37,6 +38,7 @@
 		{value}
 		{name}
 		{required}
+    {autocomplete}
 		class={`
         peer
         w-full
