@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { fail } from '@sveltejs/kit';
-import { promise, z } from 'zod';
+import { RegisterAgentSchema } from '$lib/Zod/Schema.js';
 import db from '$db/mongo.js';
 export async function load() {
 	try {
@@ -14,53 +14,11 @@ export async function load() {
 	}
 }
 
-const RegisterAgentSchema = z
-	.object({
-		name: z
-			.string({ required_error: 'Name is required' })
-			.trim()
-			.min(1, { message: 'Name is required' })
-			.max(64, { message: 'Name must be less than 64 characters' }),
-
-		email: z
-			.string({ required_error: 'Email is required' })
-			.min(1, { message: 'Email is required' })
-			.max(64, { message: 'Email must be less than 64 characters' })
-			.email({ message: 'Email must be a valid email address' }),
-		phone: z
-			.number({ required_error: 'Phone is required' })
-			.gt(999999999, { message: 'Phone must be a valid number' })
-			.lt(9999999999, { message: 'Phone must be a valid number' }),
-		password: z
-			.string({ required_error: 'Password is required' })
-			.min(6, { message: 'Password must be at least 6 characters' })
-			.max(32, { message: 'Password must be less than 32 characters' })
-			.trim(),
-		passwordConfirm: z
-			.string({ required_error: 'Password is required' })
-			.min(6, { message: 'Password must be at least 6 characters' })
-			.max(32, { message: 'Password must be less than 32 characters' })
-			.trim()
-	})
-	.superRefine(({ passwordConfirm, password }, ctx) => {
-		if (passwordConfirm !== password) {
-			ctx.addIssue({
-				code: 'custom',
-				message: 'Password and Confirm Password must match',
-				path: ['password']
-			});
-			ctx.addIssue({
-				code: 'custom',
-				message: 'Password and Confirm Password must match',
-				path: ['passwordConfirm']
-			});
-		}
-	});
-/** @type {import('./$types').Actions} */
 export const actions = {
 	RegisterAgent: async ({ request }) => {
 		try {
 			const formData = Object.fromEntries(await request.formData());
+			formData.phone = parseInt(formData?.phone ?? 0);
 			const result = RegisterAgentSchema.parse(formData);
 
 			console.log(result);
@@ -73,7 +31,7 @@ export const actions = {
 		} catch (err) {
 			console.log(err);
 			const { fieldErrors: errors } = err.flatten();
-			const { password, passwordConfirm, ...rest } = formData;
+			const { password, passwordConfirm, ...rest } = await request.formData;
 			return fail(400, {
 				data: rest,
 				errors
@@ -100,19 +58,25 @@ export const actions = {
 };
 
 async function createAgent({ name, email, password, phone }) {
-	const document = {
-		name,
-		email,
-		phone,
-		isVerified: { email: false, phone: false }
-	};
-	const pass = await hash_password(password);
+	try {
+		const document = {
+			name,
+			email,
+			phone,
+			bio: "Working as a agent",
+			isVerified: { email: false, phone: false }
+		};
+		const pass = await hash_password(password);
+		const doc = { ...document, password: pass };
 
-	const doc = { ...document, password: pass };
-	return Promise.resolve({ success: true });
+		const res = await db.collection('agents').insertOne(doc);
+		console.log(res)
+		return Promise.resolve({ success: true });
+	} catch (e) {
+		return Promise.reject({ fail: true });
+	}
 }
 
 async function hash_password(password) {
-	const hash = crypto.createHash('sha256').update(password).digest('hex');
-	return { hash };
+	return crypto.createHash('sha256').update(password).digest('hex');
 }

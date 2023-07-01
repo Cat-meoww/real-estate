@@ -41,7 +41,7 @@
 			//applyAction(result);
 		};
 	}
-	//$: console.log(form);
+	$: console.log(form);
 </script>
 
 <Modal bind:isOpen={$registermodal}>
@@ -57,6 +57,15 @@
 					value={form?.data?.email ?? ''}
 					required
 					type="email"
+					errors={form?.errors ?? []}
+				/>
+				<Input
+					id="phone"
+					label="phone"
+					disabled={isLoading}
+					value={form?.data?.phone ?? ''}
+					required
+					type="number"
 					errors={form?.errors ?? []}
 				/>
 				<Input

@@ -7,7 +7,7 @@
 	export let formatPrice;
 	export let errors = [];
 	export let required = false;
-	export let autocomplete = "off";
+	export let autocomplete = "on";
 
 	const name = id;
 
