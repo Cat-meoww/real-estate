@@ -5,3 +5,4 @@ export let IsLoggedIn = writable(false);
 
 export let testmodal = writable(false);
 export let registermodal = writable(false);
+export let loginmodal = writable(false);
