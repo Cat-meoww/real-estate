@@ -1,6 +1,7 @@
 import crypto from 'crypto';
 import { fail } from '@sveltejs/kit';
 import { RegisterAgentSchema } from '$lib/Zod/Schema.js';
+import { MongoServerError } from "mongodb";
 import db from '$db/mongo.js';
 export async function load() {
 	try {
@@ -19,17 +20,22 @@ export const actions = {
 		try {
 			const formData = Object.fromEntries(await request.formData());
 			formData.phone = parseInt(formData?.phone ?? 0);
-			const result = RegisterAgentSchema.parse(formData);
+			RegisterAgentSchema.parse(formData);
 
-			console.log(result);
+			//console.log(result);
 			return await createAgent(formData);
 			// return fail(400, {
 			// 	data: formData,
 			// 	errmsg: 'User already exist'
 			// });
-			//return { success: true };
+
 		} catch (err) {
-			console.log(err);
+			if (err instanceof MongoServerError) {
+				return fail(400, {
+					flash: "Data already exist",
+				});
+			}
+
 			const { fieldErrors: errors } = err.flatten();
 			const { password, passwordConfirm, ...rest } = await request.formData;
 			return fail(400, {
@@ -64,16 +70,20 @@ async function createAgent({ name, email, password, phone }) {
 			email,
 			phone,
 			bio: "Working as a agent",
+			profile_picture:`https://ui-avatars.com/api/?bold=true&background=FF385C&color=fff&name=${name}`,
 			isVerified: { email: false, phone: false }
 		};
-		const pass = await hash_password(password);
-		const doc = { ...document, password: pass };
-
-		const res = await db.collection('agents').insertOne(doc);
-		console.log(res)
-		return Promise.resolve({ success: true });
+		const pass = await hash_password(password)
+		const doc = { ...document, password: pass }
+		console.log(doc);
+		const agents = await db.collection('agents')
+		
+		let result = await agents.insertOne(doc);
+		
+		return Promise.resolve({success: true });
 	} catch (e) {
-		return Promise.reject({ fail: true });
+		console.log(e);
+		return Promise.reject(e);
 	}
 }
 

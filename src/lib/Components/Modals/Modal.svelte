@@ -10,24 +10,17 @@
 </script>
 
 {#if isOpen}
+	<!-- {#key isOpen} -->
 	<div
-		class="justify-center items-center flex overflow-hidden fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70
-        "
+		class="justify-center items-center flex overflow-hidden fixed inset-0 z-50 outline-none focus:outline-none bg-neutral-800/70"
 	>
-		<div
-			class="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto
-          "
-		>
+		<div class="relative w-full md:w-4/6 lg:w-3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto">
 			<!-- content -->
 			<div
 				transition:fly={{ y: 500, duration: 400 }}
-				class={`
-				pt-3 md:pt-0
-            translate
-            duration-300
-            h-full
-            ${showModal ? 'translate-y-0' : 'translate-y-full'}
-            ${showModal ? 'opacity-100' : 'opacity-0'}
+				class={`pt-3 md:pt-0 translate duration-300 h-full ${
+					showModal ? 'translate-y-0' : 'translate-y-full'
+				} ${showModal ? 'opacity-100' : 'opacity-0'}
           `}
 			>
 				<div
@@ -38,7 +31,8 @@
 					<div
 						class=" flex leading-5 items-center px-6 py-3 md:py-0 min-h-12 md:min-h-[64px] rounded-t justify-center relative border-b-[1px]"
 					>
-						<button on:click={close}
+						<button
+							on:click={close}
 							class="p-2.5 border-0 rounded-full hover:text-black hover:bg-air-hover-bg transition absolute left-3
                   "
 						>
@@ -71,4 +65,5 @@
 			</div>
 		</div>
 	</div>
+	<!-- {/key} -->
 {/if}

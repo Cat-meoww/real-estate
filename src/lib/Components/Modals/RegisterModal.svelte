@@ -32,8 +32,15 @@
 				console.log('success');
 				toast.success('Registation Success', { duration: 1500 });
 				handler.form.reset();
+				$registermodal=false;
 			}
 			if (result.type === 'failure') {
+				if (form?.flash ?? false) {
+					toast.error(form?.flash, {
+						duration: 1500
+					});
+					return;
+				}
 				toast.error('Something went wrong', {
 					duration: 1500
 				});
@@ -101,7 +108,7 @@
 	<svelte:fragment slot="footer">
 		<div class="flex flex-col gap-4">
 			{#if form?.success}
-				<p>Successfully logged in! Welcome back {form.success}</p>
+				<p class="text-center text-bold">Successfully logged in! Welcome back {form.success}</p>
 			{/if}
 			{#if form?.errmsg}
 				<p class="text-air-pink text-center">{form.errmsg}</p>

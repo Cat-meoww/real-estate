@@ -1,6 +1,6 @@
 <div
 	class="
-        max-w-[2520px]
+        max-w-[1445px]
         mx-auto
         xl:px-10
         lg:px-10
